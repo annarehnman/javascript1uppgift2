@@ -2,3 +2,7 @@
   width: 20px;
   height: 20px;
 }
+
+.card p {
+  font-size: 1.1rem;
+}
