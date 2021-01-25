@@ -4,9 +4,8 @@ const input = document.querySelector('#input');
 const output = document.querySelector('#output');
 const form = document.querySelector('#todoForm');
 const todoText = document.querySelector('#todoText');
-const addBtn = document.querySelector('#addBtn');
-const delteBtn = document.querySelector('#deleteBtn');
-const checkBtn = document.querySelector('checkBtn');
+const deleteBtn = document.querySelectorAll('.deleteBtn');
+const checkBtn = document.querySelectorAll('.checkBtn');
 
 // FUNCTION - hämtar todos
 const fetchTodos = async () => {
@@ -51,14 +50,15 @@ const newTodo = (todo) => {
   innerCard3.classList.add('d-flex', 'align-items-center');
 
   let checkbox = document.createElement('input');
-  checkbox.classList.add('m-2', 'big-checkbox');
+  checkbox.classList.add('m-2', 'big-checkbox', 'checkBtn');
+  checkbox.setAttribute("type", "checkbox");
 
   let title = document.createElement('p');
   title.classList.add('card-text');
   title.innerText = todo.title;
 
   let button = document.createElement('button');
-  button.classList.add('btn', 'btn-danger');
+  button.classList.add('btn', 'btn-danger', 'deleteBtn');
   button.addEventListener('click', () => console.log(todo.id))
 
   let trashcan = document.createElement('i');
@@ -90,10 +90,25 @@ const addTodo = (title) => {
   })
   .then(res => res.json())
   .then(data => {
-    console.log(data);
     todos.unshift(data);
     listTodos();
   })
+}
+
+// FUNCTION - validerar input
+const validateInput = (id) => {
+  let input = document.querySelector(id);
+
+  if(input.value === '') {
+      input.classList.add('is-invalid');
+      input.classList.remove('is-valid');
+      input.focus();
+      return false;
+  } else {
+      input.classList.remove('is-invalid');
+      input.classList.add('is-valid');
+      return true;
+  }
 }
 
 // FUNCTION - rensar form
@@ -109,19 +124,33 @@ fetchTodos();
 
 // EVENT - spara
 form.addEventListener('submit', e => {
-  e.preventDefault(); 
-
-  // här ska input valideras
-  addTodo(input.value);
-  resetForm(input);
+  e.preventDefault();
+  
+  if(validateInput('#input')) {
+    addTodo(input.value);
+    resetForm(input);
+  }
 })
 
-// EVENT - ta bort
-// output.addEventListener('click', e => {
-// 	if(e.target && e.target.id == "deleteBtn") {
-//     console.log("deleteBtn");
-    
-//     todos = todos.filter(todos => todo.id !== e.target.parentNode.parentNode.parentNode.id);
-//     listTodos();
-//   }
-// });
+// EVENT - checkar todo
+output.addEventListener('click', e => {
+  console.log(e.target);
+
+  // if(e.target.id == '#checkBtn') {
+  //   console.log("hej");
+  // }
+
+// 	// if(e.target == "deleteBtn") {
+//   //       members = members.filter(member => member.id !== e.target.parentNode.parentNode.parentNode.id);
+//   //       listMembers();
+//   //   }
+});
+
+// FUNCTION - ta bort todo
+// const deleteTodo = () => {
+//   console.log("deleteTodo");
+  
+//   console.log(todo.id);
+//   // todos = todos.filter(todos => todo.id !== e.target.parentNode.parentNode.parentNode.id);
+//   // listTodos();
+// }
