@@ -3,11 +3,11 @@
   height: 20px;
 }
 
+.card p {
+  font-size: 1.1rem;
+}
+
 .checked {
   text-decoration: line-through;
   color: grey;
-}
-
-.card p {
-  font-size: 1.1rem;
 }

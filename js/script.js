@@ -52,6 +52,15 @@ const newTodo = (todo) => {
   let checkbox = document.createElement('input');
   checkbox.classList.add('m-2', 'big-checkbox', 'checkBtn');
   checkbox.setAttribute("type", "checkbox");
+  checkbox.addEventListener('click', () => {
+    todo.completed = !todo.completed;
+    console.log(todo.completed);
+    if(todo.completed) {
+      title.classList.add('checked');
+    } else {
+      title.classList.remove('checked');
+    }
+  });
 
   let title = document.createElement('p');
   title.classList.add('card-text');
@@ -59,7 +68,12 @@ const newTodo = (todo) => {
 
   let button = document.createElement('button');
   button.classList.add('btn', 'btn-danger', 'deleteBtn');
-  button.addEventListener('click', () => console.log(todo.id))
+  button.addEventListener('click', () => {
+    if(todo.completed) {
+      console.log("tabort" + todo.id);
+      // todos = todos.splice(todo => todo.id !== e.target.parentNode.parentNode.parentNode.id);
+    }
+  })
 
   let trashcan = document.createElement('i');
   trashcan.classList.add('bi', 'bi-trash-fill');
@@ -119,8 +133,21 @@ const resetForm = input => {
   input.classList.remove('is-valid');
 }
 
+function myFunction() {
+  var element = document.getElementById("myDIV");
+  element.classList.toggle("mystyle");
+}
+
+// FUNCTION - check todos
+// const checkTodos = () => {
+//   if(todo.completed) {
+//     element.classList.add('checked');
+//   } 
+// }
+
 // START
 fetchTodos();
+// checkTodos();
 
 // EVENT - spara
 form.addEventListener('submit', e => {
@@ -133,18 +160,18 @@ form.addEventListener('submit', e => {
 })
 
 // EVENT - checkar todo
-output.addEventListener('click', e => {
-  console.log(e.target);
+// output.addEventListener('click', e => {
+//   console.log(e.target);
 
-  // if(e.target.id == '#checkBtn') {
-  //   console.log("hej");
-  // }
+//   element.onclick = function() {
+//     input.classList.toggle("reverse");
+//    }
 
-// 	// if(e.target == "deleteBtn") {
-//   //       members = members.filter(member => member.id !== e.target.parentNode.parentNode.parentNode.id);
-//   //       listMembers();
-//   //   }
-});
+// // 	// if(e.target == "deleteBtn") {
+// //   //       members = members.filter(member => member.id !== e.target.parentNode.parentNode.parentNode.id);
+// //   //       listMembers();
+// //   //   }
+// });
 
 // FUNCTION - ta bort todo
 // const deleteTodo = () => {
