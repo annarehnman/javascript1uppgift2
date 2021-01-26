@@ -52,9 +52,11 @@ const newTodo = (todo) => {
   let checkbox = document.createElement('input');
   checkbox.classList.add('m-2', 'big-checkbox', 'checkBtn');
   checkbox.setAttribute("type", "checkbox");
+  // EVENT - check
   checkbox.addEventListener('click', () => {
     todo.completed = !todo.completed;
     console.log(todo.completed);
+
     if(todo.completed) {
       title.classList.add('checked');
     } else {
@@ -71,6 +73,7 @@ const newTodo = (todo) => {
   button.addEventListener('click', () => {
     if(todo.completed) {
       console.log("tabort" + todo.id);
+      // EVENT - ta bort todo
       // todos = todos.splice(todo => todo.id !== e.target.parentNode.parentNode.parentNode.id);
     }
   })
@@ -138,18 +141,10 @@ function myFunction() {
   element.classList.toggle("mystyle");
 }
 
-// FUNCTION - check todos
-// const checkTodos = () => {
-//   if(todo.completed) {
-//     element.classList.add('checked');
-//   } 
-// }
-
 // START
 fetchTodos();
-// checkTodos();
 
-// EVENT - spara
+// EVENT - add
 form.addEventListener('submit', e => {
   e.preventDefault();
   
@@ -158,20 +153,6 @@ form.addEventListener('submit', e => {
     resetForm(input);
   }
 })
-
-// EVENT - checkar todo
-// output.addEventListener('click', e => {
-//   console.log(e.target);
-
-//   element.onclick = function() {
-//     input.classList.toggle("reverse");
-//    }
-
-// // 	// if(e.target == "deleteBtn") {
-// //   //       members = members.filter(member => member.id !== e.target.parentNode.parentNode.parentNode.id);
-// //   //       listMembers();
-// //   //   }
-// });
 
 // FUNCTION - ta bort todo
 // const deleteTodo = () => {
