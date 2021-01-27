@@ -1,11 +1,9 @@
 let todos = [];
+let newId;
 
 const input = document.querySelector('#input');
 const output = document.querySelector('#output');
 const form = document.querySelector('#todoForm');
-const todoText = document.querySelector('#todoText');
-const deleteBtn = document.querySelectorAll('.deleteBtn');
-const checkBtn = document.querySelectorAll('.checkBtn');
 
 // FUNCTION - hämtar todos
 const fetchTodos = async () => {
@@ -28,7 +26,7 @@ const listTodos = () => {
   })
 }
 
-// FUCTION - skapar todos
+// FUCTION - skapar HTML
 const newTodo = (todo) => {
   let card = document.createElement('div');
   card.classList.add('card', 'mt-3');
@@ -63,19 +61,18 @@ const newTodo = (todo) => {
   editedIcon.addEventListener('click', () => {
     todo.completed = !todo.completed;
     checkTodo();
-});
+  });
 
   let deleteIcon = document.createElement('i');
   deleteIcon.classList.add('bi', 'bi-trash-fill', 'd-flex', 'align-items-center');
   //EVENT - deleteIcon
-  deleteIcon.addEventListener('click', e => {
-    if(todo.completed) {
-      for(let i = 0; i < todos.length; i++) {            
-        if(todos[i].id == todo.id) {
-            todos.splice(i, 1);
-        }    
-      }
+  deleteIcon.addEventListener('click', e => { 
+    for(let i = 0; i < todos.length; i++) {
+      
+      if(todos[i].id == todo.id) {
+        todos.splice(i, 1);
       listTodos();
+      }
     }
   });
 
@@ -86,6 +83,7 @@ const newTodo = (todo) => {
   innerCard2.appendChild(iconCard);
   output.appendChild(card);
 
+  // FUNCTION - stylar todo
   const checkTodo = () => {
     if(todo.completed) {
       textCard.classList.add('checked');
@@ -120,9 +118,17 @@ const addTodo = (title) => {
   .then(res => res.json())
   .then(data => {
     todos.unshift(data);
+    newId = data.id;
+    uniqueId();
+    data.id = newId
     listTodos();
   })
 }
+
+// FUNCTION - unique ID
+const uniqueId = () => {
+  newId = Date.now().toString();
+};
 
 // FUNCTION - validerar input
 const validateInput = (id) => {
