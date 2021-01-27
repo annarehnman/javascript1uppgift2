@@ -1,9 +1,36 @@
+body {
+  background: #f8f8f8; 
+  font-family: 'Assistant', sans-serif;
+}
+
+nav {
+  background: #05716c;
+}
+
+h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 4rem;
+  margin: 5px 0px 5px 0px;
+}
+
 p {
   font-size: 1.1rem;
 }
 
 i {
   font-size: 1.3rem;
+}
+
+.form-control {
+  background-image: none !important;
+  box-shadow: none !important;
+  border-color: #ccc !important;
+}
+
+.invalid-feedback {
+  color: black;
+  /* font-family: 'Dancing Script', cursive;
+  font-size: 1.5rem; */
 }
 
 .checked {
@@ -19,5 +46,7 @@ i {
 }
 
 #addBtn {
+  background-color: #05716c;
+  border-color: #05716c;
   border-radius: 0px 4px 4px 0px;
 }
