@@ -9,14 +9,10 @@ const checkBtn = document.querySelectorAll('.checkBtn');
 
 // FUNCTION - hämtar todos
 const fetchTodos = async () => {
-  console.log("fetchTodos");
-
   try {
     const res = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10');
     const data = await res.json();
-  
     todos = data;
-
     listTodos();
   }
   catch(err) {
@@ -26,8 +22,6 @@ const fetchTodos = async () => {
 
 // FUNCTION - listar todos
 const listTodos = () => {
-  console.log("listTodos");
-
   output.innerHTML = ''
   todos.forEach(todo => {
     newTodo(todo);
@@ -36,10 +30,8 @@ const listTodos = () => {
 
 // FUCTION - skapar todos
 const newTodo = (todo) => {
-  console.log("newTodos");
-
   let card = document.createElement('div');
-  card.classList.add('card', 'mb-3');
+  card.classList.add('card', 'mt-3');
 
   let innerCard1 = document.createElement('div');
   innerCard1.classList.add('card-body');
@@ -58,30 +50,32 @@ const newTodo = (todo) => {
   iconsCard.classList.add('d-flex', 'justify-content-end')
 
   let editIcon = document.createElement('i');
-  editIcon.classList.add('bi', 'bi-square', 'm-1');
+  editIcon.classList.add('bi', 'bi-square', 'm-1', 'd-flex', 'align-items-center');
   //EVENT - editIcon
   editIcon.addEventListener('click', () => {
     todo.completed = !todo.completed;
-    console.log(todo.completed);
     checkTodo();
   });
 
   let editedIcon = document.createElement('i');
-  editedIcon.classList.add('bi', 'bi-check-square', 'm-1');
+  editedIcon.classList.add('bi', 'bi-check-square', 'm-1', 'd-flex', 'align-items-center');
   //EVENT - editedIcon
   editedIcon.addEventListener('click', () => {
     todo.completed = !todo.completed;
-    console.log(todo.completed);
     checkTodo();
 });
 
   let deleteIcon = document.createElement('i');
-  deleteIcon.classList.add('bi', 'bi-trash-fill', 'm-1');
+  deleteIcon.classList.add('bi', 'bi-trash-fill', 'm-1', 'd-flex', 'align-items-center');
   //EVENT - deleteIcon
-  deleteIcon.addEventListener('click', () => {
+  deleteIcon.addEventListener('click', e => {
     if(todo.completed) {
-      console.log("tabort" + todo.id);
-      // todos = todos.splice(todo => todo.id !== e.target.parentNode.parentNode.parentNode.id);
+      for(let i = 0; i < todos.length; i++) {            
+        if(todos[i].id == todo.id) {
+            todos.splice(i, 1);
+        }    
+      }
+      listTodos();
     }
   });
 
@@ -93,8 +87,6 @@ const newTodo = (todo) => {
   output.appendChild(card);
 
   const checkTodo = () => {
-    console.log("checkTodo");
-
     if(todo.completed) {
       text.classList.add('checked');
       iconsCard.appendChild(editIcon);
@@ -115,8 +107,6 @@ const newTodo = (todo) => {
 
 // FUNCTION - lägger till todo
 const addTodo = (title) => {
-  console.log("addTodo");
-
   fetch('https://jsonplaceholder.typicode.com/todos?_limit=10',{
     method: 'POST',
     headers: {
@@ -136,8 +126,6 @@ const addTodo = (title) => {
 
 // FUNCTION - validerar input
 const validateInput = (id) => {
-  console.log("validateInput");
-
   let input = document.querySelector(id);
 
   if(input.value === '') {
@@ -154,8 +142,6 @@ const validateInput = (id) => {
 
 // FUNCTION - rensar form
 const resetForm = input => {
-  console.log("resetForm");
-
   input.value ='';
   input.classList.remove('is-valid');
 }
@@ -172,13 +158,3 @@ form.addEventListener('submit', e => {
     resetForm(input);
   }
 });
-
-
-// FUNCTION - ta bort todo
-// const deleteTodo = () => {
-//   console.log("deleteTodo");
-  
-//   console.log(todo.id);
-//   // todos = todos.filter(todos => todo.id !== e.target.parentNode.parentNode.parentNode.id);
-//   // listTodos();
-// }
