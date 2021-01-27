@@ -46,11 +46,11 @@ const newTodo = (todo) => {
   text.classList.add('card-text');
   text.innerText = todo.title;
 
-  let iconsCard = document.createElement('div');
-  iconsCard.classList.add('d-flex', 'justify-content-end')
+  let iconCard = document.createElement('div');
+  iconCard.classList.add('d-flex', 'justify-content-end')
 
   let editIcon = document.createElement('i');
-  editIcon.classList.add('bi', 'bi-square', 'm-1', 'd-flex', 'align-items-center');
+  editIcon.classList.add('bi', 'bi-square', 'd-flex', 'align-items-center', 'squares');
   //EVENT - editIcon
   editIcon.addEventListener('click', () => {
     todo.completed = !todo.completed;
@@ -58,7 +58,7 @@ const newTodo = (todo) => {
   });
 
   let editedIcon = document.createElement('i');
-  editedIcon.classList.add('bi', 'bi-check-square', 'm-1', 'd-flex', 'align-items-center');
+  editedIcon.classList.add('bi', 'bi-check-square', 'd-flex', 'align-items-center', 'squares');
   //EVENT - editedIcon
   editedIcon.addEventListener('click', () => {
     todo.completed = !todo.completed;
@@ -66,7 +66,7 @@ const newTodo = (todo) => {
 });
 
   let deleteIcon = document.createElement('i');
-  deleteIcon.classList.add('bi', 'bi-trash-fill', 'm-1', 'd-flex', 'align-items-center');
+  deleteIcon.classList.add('bi', 'bi-trash-fill', 'd-flex', 'align-items-center');
   //EVENT - deleteIcon
   deleteIcon.addEventListener('click', e => {
     if(todo.completed) {
@@ -83,23 +83,23 @@ const newTodo = (todo) => {
   innerCard1.appendChild(innerCard2);
   innerCard2.appendChild(textCard);
   textCard.appendChild(text);
-  innerCard2.appendChild(iconsCard);
+  innerCard2.appendChild(iconCard);
   output.appendChild(card);
 
   const checkTodo = () => {
     if(todo.completed) {
-      text.classList.add('checked');
-      iconsCard.appendChild(editIcon);
-      iconsCard.appendChild(editedIcon);
-      iconsCard.appendChild(deleteIcon);
-      iconsCard.removeChild(editIcon);
+      textCard.classList.add('checked');
+      textCard.insertBefore(editIcon, text);
+      textCard.insertBefore(editedIcon, text);
+      iconCard.appendChild(deleteIcon);
+      textCard.removeChild(editIcon);
     } else {
-      text.classList.remove('checked');
-      iconsCard.appendChild(editIcon);
-      iconsCard.appendChild(editedIcon);
-      iconsCard.appendChild(deleteIcon);
-      iconsCard.removeChild(editedIcon);
-      iconsCard.removeChild(deleteIcon);
+      textCard.classList.remove('checked');
+      textCard.insertBefore(editIcon, text);
+      textCard.insertBefore(editedIcon, text);
+      iconCard.appendChild(deleteIcon);
+      textCard.removeChild(editedIcon);
+      iconCard.removeChild(deleteIcon);
     }
   }
   checkTodo();

@@ -7,8 +7,15 @@ i {
 }
 
 .checked {
-  text-decoration: line-through;
   color: lightgrey;
+}
+
+.checked p {
+  text-decoration: line-through;
+}
+
+.squares {
+  margin-right: 10px;
 }
 
 #addBtn {
