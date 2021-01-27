@@ -16,6 +16,7 @@ const fetchTodos = async () => {
     const data = await res.json();
   
     todos = data;
+
     listTodos();
   }
   catch(err) {
@@ -46,49 +47,70 @@ const newTodo = (todo) => {
   let innerCard2 = document.createElement('div');
   innerCard2.classList.add('d-flex', 'justify-content-between');
 
-  let innerCard3 = document.createElement('div');
-  innerCard3.classList.add('d-flex', 'align-items-center');
+  let textCard = document.createElement('div');
+  textCard.classList.add('d-flex', 'align-items-center');
 
-  let checkbox = document.createElement('input');
-  checkbox.classList.add('m-2', 'big-checkbox', 'checkBtn');
-  checkbox.setAttribute("type", "checkbox");
-  // EVENT - check
-  checkbox.addEventListener('click', () => {
+  let text = document.createElement('p');
+  text.classList.add('card-text');
+  text.innerText = todo.title;
+
+  let iconsCard = document.createElement('div');
+  iconsCard.classList.add('d-flex', 'justify-content-end')
+
+  let editIcon = document.createElement('i');
+  editIcon.classList.add('bi', 'bi-square', 'm-1');
+  //EVENT - editIcon
+  editIcon.addEventListener('click', () => {
     todo.completed = !todo.completed;
     console.log(todo.completed);
+    checkTodo();
+  });
 
+  let editedIcon = document.createElement('i');
+  editedIcon.classList.add('bi', 'bi-check-square', 'm-1');
+  //EVENT - editedIcon
+  editedIcon.addEventListener('click', () => {
+    todo.completed = !todo.completed;
+    console.log(todo.completed);
+    checkTodo();
+});
+
+  let deleteIcon = document.createElement('i');
+  deleteIcon.classList.add('bi', 'bi-trash-fill', 'm-1');
+  //EVENT - deleteIcon
+  deleteIcon.addEventListener('click', () => {
     if(todo.completed) {
-      title.classList.add('checked');
-    } else {
-      title.classList.remove('checked');
+      console.log("tabort" + todo.id);
+      // todos = todos.splice(todo => todo.id !== e.target.parentNode.parentNode.parentNode.id);
     }
   });
 
-  let title = document.createElement('p');
-  title.classList.add('card-text');
-  title.innerText = todo.title;
-
-  let button = document.createElement('button');
-  button.classList.add('btn', 'btn-danger', 'deleteBtn');
-  button.addEventListener('click', () => {
-    if(todo.completed) {
-      console.log("tabort" + todo.id);
-      // EVENT - ta bort todo
-      // todos = todos.splice(todo => todo.id !== e.target.parentNode.parentNode.parentNode.id);
-    }
-  })
-
-  let trashcan = document.createElement('i');
-  trashcan.classList.add('bi', 'bi-trash-fill');
-
   card.appendChild(innerCard1);
   innerCard1.appendChild(innerCard2);
-  innerCard2.appendChild(innerCard3);
-  innerCard3.appendChild(checkbox);
-  innerCard3.appendChild(title);
-  innerCard2.appendChild(button);
-  button.appendChild(trashcan);
+  innerCard2.appendChild(textCard);
+  textCard.appendChild(text);
+  innerCard2.appendChild(iconsCard);
   output.appendChild(card);
+
+  const checkTodo = () => {
+    console.log("checkTodo");
+
+    if(todo.completed) {
+      text.classList.add('checked');
+      iconsCard.appendChild(editIcon);
+      iconsCard.appendChild(editedIcon);
+      iconsCard.appendChild(deleteIcon);
+      iconsCard.removeChild(editIcon);
+    } else {
+      text.classList.remove('checked');
+      iconsCard.appendChild(editIcon);
+      iconsCard.appendChild(editedIcon);
+      iconsCard.appendChild(deleteIcon);
+      iconsCard.removeChild(editedIcon);
+      iconsCard.removeChild(deleteIcon);
+    }
+  }
+  checkTodo();
 }
 
 // FUNCTION - lägger till todo
@@ -114,6 +136,8 @@ const addTodo = (title) => {
 
 // FUNCTION - validerar input
 const validateInput = (id) => {
+  console.log("validateInput");
+
   let input = document.querySelector(id);
 
   if(input.value === '') {
@@ -136,11 +160,6 @@ const resetForm = input => {
   input.classList.remove('is-valid');
 }
 
-function myFunction() {
-  var element = document.getElementById("myDIV");
-  element.classList.toggle("mystyle");
-}
-
 // START
 fetchTodos();
 
@@ -152,7 +171,8 @@ form.addEventListener('submit', e => {
     addTodo(input.value);
     resetForm(input);
   }
-})
+});
+
 
 // FUNCTION - ta bort todo
 // const deleteTodo = () => {
